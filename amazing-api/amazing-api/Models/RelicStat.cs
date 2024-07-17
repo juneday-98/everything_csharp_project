@@ -7,8 +7,6 @@ public partial class RelicStat
 {
     public int Id { get; set; }
 
-    public string? StatCode { get; set; }
-
     public string? StatName { get; set; }
 
     public string? DateType { get; set; }

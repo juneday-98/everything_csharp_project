@@ -3,19 +3,15 @@ using System.Collections.Generic;
 
 namespace amazing_api.Models;
 
-public partial class RelicItem
+public partial class RelicSection
 {
     public int Id { get; set; }
 
-    public string ItemDescription { get; set; } = null!;
+    public string? RelicName { get; set; }
+
+    public bool? Useable { get; set; }
 
     public DateTime? CreateDate { get; set; }
 
     public DateTime? UpdateDate { get; set; }
-
-    public int? RelicId { get; set; }
-
-    public string? ItemName { get; set; }
-
-    public string? ItemCode { get; set; }
 }

@@ -20,4 +20,6 @@ public partial class RelicRarity
     public DateTime? CreateDate { get; set; }
 
     public DateTime? UpdateDate { get; set; }
+
+    public int? MinSubStat { get; set; }
 }

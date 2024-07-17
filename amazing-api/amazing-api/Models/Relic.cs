@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Runtime.CompilerServices;
 
-namespace amazing_api.Models;
-
-public partial class Relic
+namespace amazing_api.Models
 {
-    public int Id { get; set; }
-
-    public string? RelicName { get; set; }
-
-    public bool? Useable { get; set; }
-
-    public DateTime? CreateDate { get; set; }
-
-    public DateTime? UpdateDate { get; set; }
+    public class Relic
+    {
+        public int Id { get; set; }
+        public int Level { get; set; }
+        public string relicSection { get; set; }
+        public string relicRarity {  get; set; } 
+        public string relicItemname { get; set; } 
+        public string RelicPhoto { get; set; }
+        public RelicCurrentStat MainStat { get; set; }
+        public List<RelicCurrentStat>? SubStatList { get; set; } 
+        public RelicItem? RelicItem { get; set; }
+    }   
 }

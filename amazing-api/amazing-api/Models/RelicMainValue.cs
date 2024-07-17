@@ -9,7 +9,7 @@ public partial class RelicMainValue
 
     public int RelicStatId { get; set; }
 
-    public int? RelicRarityId { get; set; }
+    public int RelicRarityId { get; set; }
 
     public double? Base { get; set; }
 
@@ -17,7 +17,7 @@ public partial class RelicMainValue
 
     public double? MaxValue { get; set; }
 
-    public DateTime? CreateDate { get; set; }
+    public DateTime CreateDate { get; set; }
 
     public DateTime? UpdateDate { get; set; }
 }
