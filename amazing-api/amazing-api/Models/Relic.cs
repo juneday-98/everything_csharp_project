@@ -6,8 +6,8 @@ namespace amazing_api.Models
     {   
         public Relic(RelicSection? relicSection, RelicItem? relicItem, RelicRarity? relicRarity, RelicCurrentStat mainStat, List<RelicCurrentStat> subStatList, List<RelicItemPhoto> relicPhoto)
         {
-
-            this.Level  = 1;
+            this.Id = 0;
+            this.Level  = 0;
             this.Exp = 0;
             this.RelicSection = relicSection?.RelicName ?? string.Empty;
             this.RelicItem = relicItem;
@@ -18,8 +18,8 @@ namespace amazing_api.Models
             this.RelicPhoto = relicPhoto[0].RelicLinkPhoto ?? string.Empty;            
         }
 
-        public int Id { get; set; }
-        public int Level { get; set; }
+        public int Id { get; set; } = 0;
+        public int Level { get; set; } = 0;
         public int Exp { get; set; }
 
         public string RelicSection { get; set; }
