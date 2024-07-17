@@ -9,7 +9,6 @@ namespace amazing_api.Services
         
         public Relic GetRelic()
         {
-            Relic relic = new Relic();
             
             try
             {
@@ -75,15 +74,8 @@ namespace amazing_api.Services
                         //add sub to list
                         subStatList.Add(subStat);
                     }
-                                   
-                    relic.Level = 1;
-                    relic.relicSection = relicSection?.RelicName ?? string.Empty;
-                    relic.RelicItem = relicItem;
-                    relic.relicItemname = relicItem?.ItemName ?? "-";
-                    relic.relicRarity = relicRarity?.RarityName ?? string.Empty;
-                    relic.MainStat = mainStat;
-                    relic.SubStatList = subStatList;
-                    relic.RelicPhoto = relicPhoto[0].RelicLinkPhoto ?? string.Empty;
+
+                    Relic relic = new Relic(relicSection, relicItem, relicRarity, mainStat, subStatList, relicPhoto);
 
                     return relic;
                 }
@@ -94,7 +86,7 @@ namespace amazing_api.Services
             }
             
         }
-
+       
         
     }
 }
