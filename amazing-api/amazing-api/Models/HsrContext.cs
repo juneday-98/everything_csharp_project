@@ -15,6 +15,10 @@ public partial class HsrContext : DbContext
     {
     }
 
+    public virtual DbSet<ExistRelic> ExistRelics { get; set; }
+
+    public virtual DbSet<ExistRelicStatus> ExistRelicStatuses { get; set; }
+
     public virtual DbSet<RelicAvailabilityStat> RelicAvailabilityStats { get; set; }
 
     public virtual DbSet<RelicItem> RelicItems { get; set; }
@@ -34,10 +38,52 @@ public partial class HsrContext : DbContext
     public virtual DbSet<RelicSubValue> RelicSubValues { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=Samsibsi;Database=HSR;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ExistRelic>(entity =>
+        {
+            entity.ToTable("exist_relic");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("create_date");
+            entity.Property(e => e.Exp).HasColumnName("exp");
+            entity.Property(e => e.Level).HasColumnName("level");
+            entity.Property(e => e.RelicId).HasColumnName("relic_id");
+            entity.Property(e => e.RelicItenId).HasColumnName("relic_iten_id");
+            entity.Property(e => e.RelicPhotoId).HasColumnName("relic_photo_id");
+            entity.Property(e => e.RelicRarityId).HasColumnName("relic_rarity_id");
+            entity.Property(e => e.TagId).HasColumnName("tag_id");
+            entity.Property(e => e.UpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("update_date");
+            entity.Property(e => e.Usable).HasColumnName("usable");
+        });
+
+        modelBuilder.Entity<ExistRelicStatus>(entity =>
+        {
+            entity.ToTable("exist_relic_status");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreateDate)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("create_date");
+            entity.Property(e => e.ExistRelicId).HasColumnName("exist_relic_id");
+            entity.Property(e => e.RelicStatId).HasColumnName("relic_stat_id");
+            entity.Property(e => e.StatType).HasColumnName("stat_type");
+            entity.Property(e => e.Step).HasColumnName("step");
+            entity.Property(e => e.UpdateDate)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("update_date");
+            entity.Property(e => e.Value).HasColumnName("value");
+        });
+
         modelBuilder.Entity<RelicAvailabilityStat>(entity =>
         {
             entity.ToTable("relic_availability_stat");

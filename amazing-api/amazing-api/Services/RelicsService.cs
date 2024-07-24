@@ -50,7 +50,7 @@ namespace amazing_api.Services
                 {
                     Id = 0,
                     StatName = relicStat?.StatName ?? "-",
-                    StateType = "main",
+                    StatType = "main",
                     StatValue = relicMainValue?.Base ?? 0,
                     FormatValue = relicStat?.DateType ?? "%f",
                     UnitValue = relicStat?.Unit ?? "",
@@ -72,7 +72,7 @@ namespace amazing_api.Services
                     {
                         Id = 0,
                         StatName = MrelicSubStat[index]?.Stat?.StatName ?? "-",
-                        StateType = "sub",
+                        StatType = "sub",
                         StatValue = MrelicSubStat[index]?.SubValue?.Value ?? 0,
                         FormatValue = MrelicSubStat[index]?.Stat?.DateType ?? "%f",
                         UnitValue = MrelicSubStat[index]?.Stat?.Unit ?? ""
@@ -93,6 +93,29 @@ namespace amazing_api.Services
                 Console.WriteLine(ex);
                 throw;
             }            
-        }                    
+        }
+        public Relic UpdateRelicExp(DtoUpdateRelicEXPReq uplevelDto)
+        {
+            try
+            {
+                RelicLevelExp levelExp = new RelicLevelExp();
+                RelicRarity rarity = new RelicRarity();
+
+                //using (HsrContext hsrContext = new HsrContext())
+                //{
+                //    rarity = (from rarity in hsrContext.RelicRarities
+                //              join itemRelic in hsrContext.Exist
+
+
+                //              )
+                //}
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
+        
     }
 }

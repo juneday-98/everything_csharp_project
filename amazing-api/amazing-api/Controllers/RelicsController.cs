@@ -1,4 +1,5 @@
-﻿using amazing_api.Services;
+﻿using amazing_api.Dto;
+using amazing_api.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,19 +19,18 @@ namespace amazing_api.Controllers
         
 
         [HttpPost("/Level")]        
-        public IActionResult UpgradeLevel([FromBody] UpLevelReqDto uplevelDto)
+        public IActionResult UpgradeLevel([FromBody] DtoUpdateRelicEXPReq uplevelDto)
         {
             RelicsService relicsService = new RelicsService();
-            return Ok(relicsService.UpdateRelicExp());
-        }
-
-
-        public class UpLevelReqDto
-        {
-            [Required]             
-            public int RelicId { get; set; }
-            public int AmountExp { get; set; } = 0;
-        }
-
+            try
+            {
+               
+               return Ok(relicsService.UpdateRelicExp(uplevelDto));
+            }
+            catch (Exception ex) {
+                return BadRequest();
+            }
+            
+        }        
     }
 }
