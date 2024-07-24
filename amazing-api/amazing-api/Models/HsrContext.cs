@@ -21,6 +21,8 @@ public partial class HsrContext : DbContext
 
     public virtual DbSet<RelicItemPhoto> RelicItemPhotos { get; set; }
 
+    public virtual DbSet<RelicLevelExp> RelicLevelExps { get; set; }
+
     public virtual DbSet<RelicMainValue> RelicMainValues { get; set; }
 
     public virtual DbSet<RelicRarity> RelicRarities { get; set; }
@@ -32,7 +34,6 @@ public partial class HsrContext : DbContext
     public virtual DbSet<RelicSubValue> RelicSubValues { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=Samsibsi;Database=HSR;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -92,6 +93,24 @@ public partial class HsrContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("update_date");
             entity.Property(e => e.Usable).HasColumnName("usable");
+        });
+
+        modelBuilder.Entity<RelicLevelExp>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_relic_level_exp_2");
+
+            entity.ToTable("relic_level_exp");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("create_date");
+            entity.Property(e => e.CurrentLevel).HasColumnName("current_level");
+            entity.Property(e => e.Exp).HasColumnName("exp");
+            entity.Property(e => e.RelicRarityId).HasColumnName("relic_rarity_id");
+            entity.Property(e => e.UpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("update_date");
         });
 
         modelBuilder.Entity<RelicMainValue>(entity =>
@@ -181,6 +200,8 @@ public partial class HsrContext : DbContext
 
         modelBuilder.Entity<RelicSubValue>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_relic_sub_value_3");
+
             entity.ToTable("relic_sub_value");
 
             entity.Property(e => e.Id).HasColumnName("id");
