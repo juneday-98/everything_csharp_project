@@ -1,4 +1,5 @@
-﻿using amazing_api.Models;
+﻿using amazing_api.Dto;
+using amazing_api.Models;
  
 namespace amazing_api.Services
 {
@@ -12,6 +13,7 @@ namespace amazing_api.Services
             
             try
             {
+                // Declare Variable...
                 RelicSection? relicSection = new RelicSection();
                 RelicItem? relicItem = new RelicItem();
                 RelicRarity? relicRarity = new RelicRarity();
@@ -21,23 +23,23 @@ namespace amazing_api.Services
                 List<RelicItemPhoto>? relicPhoto = new List<RelicItemPhoto>();
                 List<RelicSubStat> MrelicSubStat = new List<RelicSubStat>();
 
-
-                using (HsrContext context = new HsrContext())
+                // 
+                using (HsrContext hsrContext = new HsrContext())
                 {
-                    relicSection = context.RelicSections.Where(p => p.Useable == true).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
-                    relicItem = context.RelicItems.Where(p => p.RelicId == relicSection.Id).FirstOrDefault();
-                    relicRarity = context.RelicRarities.OrderBy(p => Guid.NewGuid()).ThenByDescending(p => p.Percent).FirstOrDefault();
-                    relicAvailabilityStats = context.RelicAvailabilityStats.Where(p => p.RelicId == relicSection.Id && p.Usable == true).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
-                    relicStat = context.RelicStats.Where(p => p.Id == relicAvailabilityStats.RelicStatId && p.Usable == true).FirstOrDefault();                    
-                    relicMainValue = context.RelicMainValues.Where(p=> p.RelicRarityId == relicRarity.Id && p.RelicStatId == relicStat.Id).FirstOrDefault() ?? null;
+                    relicSection = hsrContext.RelicSections.Where(p => p.Useable == true).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
+                    relicItem = hsrContext.RelicItems.Where(p => p.RelicId == relicSection.Id).FirstOrDefault();
+                    relicRarity = hsrContext.RelicRarities.OrderBy(p => Guid.NewGuid()).ThenByDescending(p => p.Percent).FirstOrDefault();
+                    relicAvailabilityStats = hsrContext.RelicAvailabilityStats.Where(p => p.RelicId == relicSection.Id && p.Usable == true).OrderBy(p => Guid.NewGuid()).FirstOrDefault();
+                    relicStat = hsrContext.RelicStats.Where(p => p.Id == relicAvailabilityStats.RelicStatId && p.Usable == true).FirstOrDefault();                    
+                    relicMainValue = hsrContext.RelicMainValues.Where(p=> p.RelicRarityId == relicRarity.Id && p.RelicStatId == relicStat.Id).FirstOrDefault() ?? null;
 
-                    relicPhoto = (from item in context.RelicItems
-                                  join photo in context.RelicItemPhotos on item.Id equals photo.Id
+                    relicPhoto = (from item in hsrContext.RelicItems
+                                  join photo in hsrContext.RelicItemPhotos on item.Id equals photo.Id
                                   where photo.Usable == true
                                   select photo).Take(1).ToList();
 
-                    MrelicSubStat = (from subValue in context.RelicSubValues
-                                         join stat in context.RelicStats on subValue.RelicStatId equals stat.Id
+                    MrelicSubStat = (from subValue in hsrContext.RelicSubValues
+                                         join stat in hsrContext.RelicStats on subValue.RelicStatId equals stat.Id
                                          where subValue.RelicRarityId == relicRarity.Id
                                          select new RelicSubStat { SubValue = subValue, Stat = stat }).ToList();                   
 
@@ -90,8 +92,7 @@ namespace amazing_api.Services
             {
                 Console.WriteLine(ex);
                 throw;
-            }
-            
-        }              
+            }            
+        }                    
     }
 }
